@@ -1,0 +1,19 @@
+﻿@using JTRazorPortable
+@inherits ViewBase
+@using BandWorld.MVC.Helpers
+
+@model string
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    string message = (!String.IsNullOrEmpty(Model) ? Model : "(Sorry, no more details available.)");
+}
+
+<h2>Error</h2>
+<h4>An error occured.</h4>
+<p>
+    <center>@message</center>
+</p>
+<p>
+    @Html.ActionLinkWithImage("Back.png", "Back", "Back", "Test", null)
+</p>

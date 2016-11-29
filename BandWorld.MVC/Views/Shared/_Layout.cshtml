@@ -1,0 +1,26 @@
+﻿@using JTRazorPortable
+@inherits ViewBase
+
+@{
+}
+<!DOCTYPE html>
+<html>
+<head>
+	<meta content="text/html; charset=utf-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1"/>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/scripts")
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        @Html.Partial("_MainHeader")
+    </div>
+    <div class="renderbody">
+        @RenderBody()
+    </div>
+    @RenderSection("scripts", required: false)
+    <p>
+        @Html.Partial("_MainFooter")
+    </p>
+</body>
+</html>

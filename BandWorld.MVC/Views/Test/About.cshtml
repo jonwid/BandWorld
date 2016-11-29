@@ -1,0 +1,20 @@
+﻿@using JTRazorPortable 
+@using BandWorld.MVC.Helpers
+@using BandWorld.MVC.Models
+@inherits ViewBase
+
+@model MainViewModel
+
+@{
+    // Specify our layout, which defaults to "_Layout" unless we set an empty string here.
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    <h1>
+        @this.S("About JTMobile")
+    </h1>
+    <p>
+        @this.S("Just an experimental app.")
+    </p>
+
+    Html.MessageDiv("This is a message.", "This is an error.");
+}

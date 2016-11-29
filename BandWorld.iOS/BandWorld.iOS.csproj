@@ -92,21 +92,18 @@
     <Reference Include="System.Web.Services" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models\Model1.cs" />
-    <Compile Include="Views\RazorView.cs">
-      <DependentUpon>RazorView.cshtml</DependentUpon>
-    </Compile>
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
     <Compile Include="WebViewController.cs" />
     <Compile Include="WebViewController.designer.cs">
       <DependentUpon>WebViewController.cs</DependentUpon>
     </Compile>
+    <Compile Include="Application\ApplicationDataPlatform.cs" />
+    <Compile Include="Application\HybridWebView.cs" />
+    <Compile Include="Application\JavaScriptInterop.cs" />
+    <Compile Include="Application\ResourceManager.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Views\RazorView.cshtml">
-      <Generator>RazorTemplatePreprocessor</Generator>
-    </None>
     <None Include="Info.plist" />
     <None Include="Entitlements.plist" />
   </ItemGroup>
@@ -120,6 +117,16 @@
   <ItemGroup>
     <InterfaceDefinition Include="LaunchScreen.storyboard" />
     <InterfaceDefinition Include="Main.storyboard" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BandWorld.MVC\BandWorld.MVC.csproj">
+      <Project>{3632BA39-4DF7-4D79-9716-8D807D76F65B}</Project>
+      <Name>BandWorld.MVC</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\JTRazorPortable\JTRazorPortable.csproj">
+      <Project>{38B4EAC0-F418-446F-ABE6-CAF63C5EC8E8}</Project>
+      <Name>JTRazorPortable</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
 </Project>

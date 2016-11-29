@@ -1,0 +1,113 @@
+﻿@using JTRazorPortable 
+@using BandWorld.MVC.Models
+@using BandWorld.MVC.Helpers
+@inherits ViewBase
+
+@model MainViewModel
+
+@{
+    // Specify our layout, which defaults to "_Layout" unless we set an empty string here.
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    // Demonstrate the connection to our post handler.
+    using (Html.BeginForm("TestPost", "Test"))
+    {
+        // Demonstrates using a style from our site.css file.
+        <p class="red">
+            Hello, world.
+        </p>
+
+        // Demonstrates referencing our model.
+        <p>
+            This is my text: @Model.Text
+        </p>
+
+        // Demonstrates referencing a content file.
+        <p>
+            This is my Images image: <img src="@Url.Content("/Content/Images/Back.png")" />
+        </p>
+
+        // Demonstrates using a sub-view
+        Html.RenderPartial("_SubView");
+
+        // Demonstrates using a different model with a sub-view.
+        MainViewModel subModel = new MainViewModel();
+        subModel.Text = Model.Text + " (this is added)";
+        // Demonstrate alternate sub-view rendering.
+        @Html.Partial("_SubView", subModel);
+
+        // Demonstrates using a control whose value gets posted.
+        <p>
+            Enter something: <input type="text" name="textControl" id="textControl" class="text_edit" />
+        </p>
+
+        <p>
+            Ajax result:
+            <div id="ajaxDiv">
+            </div>
+        </p>
+        // Demonstrates a submit button and a couple of buttons calling Javascript functions.
+        <p>
+            <input type="submit" name="command" value="Save" />
+            <input type="button" name="command" value="myFunc" onclick="javascript: { myFunc('from myFunc'); }" />
+            <input type="button" name="command" value="ajaxHtml" onclick="javascript: { ajaxHtml('from ajaxHtml'); }" />
+            <input type="button" name="command" value="ajaxJson" onclick="javascript: { ajaxJson('from ajaxJson'); }" />
+        </p>
+        <p>
+            @Html.ActionLink("Error", "Error", "Test", new { message = "This is my error." })
+            @Html.ActionLink("Forward", "Forward", "Test")
+        </p>
+    }
+}
+<!-- Demonstrates using a section.
+    We can put our scripts here if we need them to be where the layout puts them via the
+    RenderSection directive. -->
+@section Scripts {
+    <script type="text/javascript" charset="utf-8">
+        function myFunc(str) {
+            // Demonstrate using jquery.
+            $("#textControl").val(str);
+            //alert("myFunc called.");
+        }
+
+        function ajaxHtml(str) {
+            // Demonstrate using jquery.
+            //$("#textControl").val(ret);
+            //alert("myFunc called.");
+            PortableAjax({
+                url: "@Url.Action("TestAjax", "Test")",
+                data: {
+                    stringValue: str
+                },
+                type: "POST",
+                complete: ReceiveData
+            });
+        }
+
+        function ReceiveData(data) {
+            var div = document.getElementById("ajaxDiv");
+            div.innerHTML = data.responseText;
+        }
+
+        function ajaxJson(str) {
+            PortableAjax({
+                url: "@Url.Action("TestAjaxJson", "Test")",
+                data: {
+                    stringValue: str
+                },
+                type: "POST",
+                complete: ReceiveDataJson
+            });
+        }
+
+        function ReceiveDataJson(data) {
+            var div = document.getElementById("ajaxDiv");
+            div.innerText = data.responseJSON;
+        }
+
+        // This is called when the document is ready.
+        $(document).ready(function () {
+            myScript('textControl', 'Started');
+        });
+    </script>
+}

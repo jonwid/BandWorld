@@ -1,0 +1,23 @@
+﻿
+.renderbody
+{
+    /* Reserve space for menu. */
+    padding-top: 50px;
+}
+
+.red
+{
+    color: darkred;
+}
+
+.error
+{
+    color:Red;
+}
+
+.confirmedmessage
+{
+    font-weight: bold;
+	color: Black;
+	padding: 6px 0px 4px 0px;
+}

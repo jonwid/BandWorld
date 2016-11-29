@@ -1,39 +1,152 @@
 ﻿using System;
-
+using System.Threading;
 using Foundation;
 using UIKit;
+using JTRazorPortable;
+using BandWorld.MVC.Controllers;
+using BandWorld.MVC.Application;
+using BandWorld.MVC;
 
 namespace BandWorld.iOS
 {
 	public partial class WebViewController : UIViewController
 	{
+		// ApplicationData settings - adjust them here.
+
+		// The application name.
+		string applicationName = "Band World";
+		// Master administrator user name.
+		string masterAdministratorUserName = "JTRazor";
+		// Can enable some development options, such as initializing the file system each time.
+		bool isDevelopmentVersion = false;
+		// Where the mobile version gets its content.
+		string serviceUrl = "http://www.fixme.com";
+		// The base directory for the platform data files.
+		string basePlatformDirectory;
+		// The tilde URL where the content is.
+		string contentTildeUrl = "~/Content";
+		// By changing this, we can cause the file system to be initialized.
+		string mediaVersion = "1";
+		// Copy resources check flag.
+		bool copyResourcesCheck =
+#if DEBUG
+				true;
+#else
+                false;
+#endif
+
+		// Some main pointers.
+		ApplicationDataPlatform applicationData;
+		public static WebViewController Global;
+
+		// Implementation data.
+		public static UIWebView webView;
+		static HybridWebView hybridWebView;
+		public static MVCManager mvcManager;
+		public static bool initialized = false;
+
 		static bool UserInterfaceIdiomIsPhone
 		{
 			get { return UIDevice.CurrentDevice.UserInterfaceIdiom == UIUserInterfaceIdiom.Phone; }
 		}
 
-		protected WebViewController(IntPtr handle) : base(handle)
+		public WebViewController(IntPtr handle) : base(handle)
 		{
-			// Note: this .ctor should not contain any initialization logic.
 		}
 
 		public override void ViewDidLoad()
 		{
 			base.ViewDidLoad();
 
-			// Intercept URL loading to handle native calls from browser
-			WebView.ShouldStartLoad += HandleShouldStartLoad;
+			if (!initialized)
+			{
+				System.Reflection.Assembly assembly = typeof(TestController).Assembly;
 
-			// Render the view from the type generated from RazorView.cshtml
-			var model = new Model1 { Text = "Text goes here" };
-			var template = new RazorView { Model = model };
-			var page = template.GenerateString();
+				// Where our stuff ends up on the phone.
+				basePlatformDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
 
-			// Load the rendered HTML into the view with a base URL 
-			// that points to the root of the bundled Resources folder
-			WebView.LoadHtmlString(page, NSBundle.MainBundle.BundleUrl);
+				// Set up map to file.
+				MVC.Application.ApplicationData.SetUpMapToFile(basePlatformDirectory);
 
-			// Perform any additional setup after loading the view, typically from a nib.
+				// Create application data object.
+				applicationData = new ApplicationDataPlatform(
+					applicationName,
+					masterAdministratorUserName,
+					isDevelopmentVersion,
+					serviceUrl,
+					basePlatformDirectory,
+					contentTildeUrl,
+					mediaVersion);
+				
+				webView = WebView;
+
+				// Intercept URL loading to handle native calls from browser
+				WebView.ShouldStartLoad += HandleShouldStartLoad;
+
+				// Create our hybrid WebView wrapper.
+				hybridWebView = new HybridWebView(WebView);
+
+				// Create our MVC manager.  This manages the interation between the
+				// models, controllers, and views.
+				mvcManager = new MVCManager(hybridWebView);
+				mvcManager.PreHandleRequest = applicationData.PreHandleRequest;
+				mvcManager.PostHandleRequest = applicationData.PostHandleRequest;
+
+				mvcManager.DispatchToUIThread = DispatchToUI;
+
+				// Save pointer to main activity.
+				Global = this;
+
+				// Prevent recreating everything on an orientation change or restart.
+				initialized = true;
+
+				// Display a splash pages.
+				ResourceManager.EnsureResource(
+					typeof(TestController).Assembly,
+					basePlatformDirectory + "/Content/Splash.html",
+					"Content.Splash.html",
+					true);
+				mvcManager.HybridView.LoadHtmlFile("Content/Splash.html");
+
+				// Do this as a thread so we don't block.
+				applicationData.RunAsThread(
+					threadOp =>
+					{
+						// Copy resources to expected places.
+						ResourceManager.EnsureResources(
+							typeof(TestController).Assembly,
+							basePlatformDirectory,
+							ApplicationData.IsDevelopmentVersion,
+							copyResourcesCheck);
+					},
+					continueOp =>
+					{
+						// Enter the common start up code for our app.
+						// It should register the controllers, views, and display the
+						// startup page.
+						DispatchToUI(callback => BandWorldCommonApp.StartUp(mvcManager));
+					}
+				);
+			}
+			else
+			{
+				// Come here if just rotating the device or restarting.
+				webView = WebView;
+
+				// Intercept URL loading to handle native calls from browser
+				WebView.ShouldStartLoad += HandleShouldStartLoad;
+
+				// Reset our hybrid WebView wrapper.
+				hybridWebView.Initialize(webView);
+
+				// Restart the app, going to the current view.
+				MVC.BandWorldCommonApp.Restart(mvcManager);
+			}
+		}
+
+		private static void DispatchToUI(WaitCallback thunk)
+		{
+			Global.InvokeOnMainThread(() => thunk(null));
 		}
 
 		public override void DidReceiveMemoryWarning()
@@ -44,33 +157,15 @@ namespace BandWorld.iOS
 
 		bool HandleShouldStartLoad(UIWebView webView, NSUrlRequest request, UIWebViewNavigationType navigationType)
 		{
-			// If the URL is not our own custom scheme, just let the webView load the URL as usual
-			const string scheme = "hybrid:";
+			string url = request.Url.AbsoluteString;
+			int offset = url.IndexOf("hybrid:");
+			if (offset != -1)
+				url = url.Substring(offset);
 
-			if (request.Url.Scheme != scheme.Replace(":", ""))
-				return true;
+			if (!url.EndsWith("/"))
+				hybridWebView.HandleRequest(url);
 
-			// This handler will treat everything between the protocol and "?"
-			// as the method name.  The querystring has all of the parameters.
-			var resources = request.Url.ResourceSpecifier.Split('?');
-			var method = resources[0];
-			var parameters = System.Web.HttpUtility.ParseQueryString(resources[1]);
-
-			if (method == "UpdateLabel")
-			{
-				var textbox = parameters["textbox"];
-
-				// Add some text to our string here so that we know something
-				// happened on the native part of the round trip.
-				var prepended = string.Format("C# says: {0}", textbox);
-
-				// Build some javascript using the C#-modified result
-				var js = string.Format("SetLabelText('{0}');", prepended);
-
-				webView.EvaluateJavascript(js);
-			}
-
-			return false;
+			return true;
 		}
 	}
 }
