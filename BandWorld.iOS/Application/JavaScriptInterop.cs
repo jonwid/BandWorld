@@ -20,5 +20,10 @@ namespace BandWorld.iOS
 		{
 			return MVCManager.HandleAjaxRequest(jsonObject);
 		}
+
+		public string MyNativeCall(string arg1, string arg2)
+		{
+			return "MyNativeCall(" + arg1 + ", " + arg2 + ") called.";
+		}
 	}
 }

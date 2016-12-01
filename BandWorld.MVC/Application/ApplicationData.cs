@@ -210,7 +210,7 @@ namespace BandWorld.MVC.Application
 			BasePlatformDirectory = basePlatformDirectory;
 			MediaVersion = mediaVersion;
 			Encoding = new UTF8Encoding(true, true);
-			PlatformPathSeparator = @"\";
+			PlatformPathSeparator = @"/";
 			MasterAdministratorUserName = masterAdministratorUserName;
 
 			// Media option defaults.
@@ -790,6 +790,11 @@ namespace BandWorld.MVC.Application
 		public virtual string EvaluateJavascript(string command)
 		{
 			return null;
+		}
+
+		public virtual void EvaluateJavascriptFromUI(string command)
+		{
+			DispatchToUI(x => EvaluateJavascript(command));
 		}
 
 		public virtual void DispatchToUI(WaitCallback thunk)

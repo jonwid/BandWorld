@@ -1,4 +1,5 @@
 ﻿using System;
+using BandWorld.MVC.Application;
 using BandWorld.MVC.Models;
 using JTRazorPortable;
 
@@ -31,7 +32,23 @@ namespace BandWorld.MVC.Controllers
 		// For now we need to use a different name so we append "Post" by convention.
 		public ActionResult TestPost(FormCollection form, string command)
 		{
-			string text = form["textControl"];
+			string text;
+
+			//text = form["textControl"];
+
+			switch (command)
+			{
+				case "Save":
+					text = form["textControl"];
+					break;
+				case "CallJavascript":
+					ApplicationData.Global.EvaluateJavascriptFromUI("myFunc('Called from C#')");
+					return Empty();
+				default:
+					text = "(no command)";
+					break;
+			}
+
 			return RedirectToAction("Test", new { text });
 		}
 

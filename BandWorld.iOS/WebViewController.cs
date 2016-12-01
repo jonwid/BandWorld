@@ -16,9 +16,9 @@ namespace BandWorld.iOS
 		// The application name.
 		string applicationName = "Band World";
 		// Master administrator user name.
-		string masterAdministratorUserName = "JTRazor";
+		string masterAdministratorUserName = "jonwid";
 		// Can enable some development options, such as initializing the file system each time.
-		bool isDevelopmentVersion = false;
+		bool isDevelopmentVersion = true;
 		// Where the mobile version gets its content.
 		string serviceUrl = "http://www.fixme.com";
 		// The base directory for the platform data files.
@@ -66,7 +66,7 @@ namespace BandWorld.iOS
 				basePlatformDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
 
 				// Set up map to file.
-				MVC.Application.ApplicationData.SetUpMapToFile(basePlatformDirectory);
+				ApplicationData.SetUpMapToFile(basePlatformDirectory);
 
 				// Create application data object.
 				applicationData = new ApplicationDataPlatform(
@@ -77,7 +77,7 @@ namespace BandWorld.iOS
 					basePlatformDirectory,
 					contentTildeUrl,
 					mediaVersion);
-				
+
 				webView = WebView;
 
 				// Intercept URL loading to handle native calls from browser
@@ -131,6 +131,7 @@ namespace BandWorld.iOS
 			else
 			{
 				// Come here if just rotating the device or restarting.
+
 				webView = WebView;
 
 				// Intercept URL loading to handle native calls from browser
@@ -140,7 +141,7 @@ namespace BandWorld.iOS
 				hybridWebView.Initialize(webView);
 
 				// Restart the app, going to the current view.
-				MVC.BandWorldCommonApp.Restart(mvcManager);
+				BandWorldCommonApp.Restart(mvcManager);
 			}
 		}
 
@@ -158,9 +159,13 @@ namespace BandWorld.iOS
 		bool HandleShouldStartLoad(UIWebView webView, NSUrlRequest request, UIWebViewNavigationType navigationType)
 		{
 			string url = request.Url.AbsoluteString;
-			int offset = url.IndexOf("hybrid:");
-			if (offset != -1)
-				url = url.Substring(offset);
+			if ((url.IndexOf("ajax:") < 0) && (url.IndexOf("call:") < 0))
+			{
+				int offsetHybrid = url.IndexOf("hybrid:");
+
+				if (offsetHybrid != -1)
+					url = url.Substring(offsetHybrid);
+			}
 
 			if (!url.EndsWith("/"))
 				hybridWebView.HandleRequest(url);

@@ -188,7 +188,7 @@ WriteLiteral(" name=\"command\"");
 
 WriteLiteral(" value=\"myFunc\"");
 
-WriteLiteral(" onclick=\"javascript: { myFunc(\'from myFunc\'); }\"");
+WriteLiteral(" onclick=\"myFunc(\'from myFunc\')\"");
 
 WriteLiteral(" />\n            <input");
 
@@ -198,7 +198,7 @@ WriteLiteral(" name=\"command\"");
 
 WriteLiteral(" value=\"ajaxHtml\"");
 
-WriteLiteral(" onclick=\"javascript: { ajaxHtml(\'from ajaxHtml\'); }\"");
+WriteLiteral(" onclick=\"ajaxHtml(\'from ajaxHtml\')\"");
 
 WriteLiteral(" />\n            <input");
 
@@ -208,16 +208,44 @@ WriteLiteral(" name=\"command\"");
 
 WriteLiteral(" value=\"ajaxJson\"");
 
-WriteLiteral(" onclick=\"javascript: { ajaxJson(\'from ajaxJson\'); }\"");
+WriteLiteral(" onclick=\"ajaxJson(\'from ajaxJson\')\"");
 
-WriteLiteral(" />\n        </p>\n");
+WriteLiteral(" />\n            <input");
+
+WriteLiteral(" type=\"button\"");
+
+WriteLiteral(" name=\"command\"");
+
+WriteLiteral(" value=\"alert\"");
+
+WriteLiteral(" onclick=\"alert(\'Alert called.\')\"");
+
+WriteLiteral(" />\n            <input");
+
+WriteLiteral(" type=\"submit\"");
+
+WriteLiteral(" name=\"command\"");
+
+WriteLiteral(" value=\"CallJavascript\"");
+
+WriteLiteral(" />\n            <input");
+
+WriteLiteral(" type=\"button\"");
+
+WriteLiteral(" name=\"command\"");
+
+WriteLiteral(" value=\"CallNative\"");
+
+WriteLiteral(" onclick=\"callNative(\'arg1\', \'arg2\')\"");
+
+WriteLiteral("  />\n        </p>\n");
 
 WriteLiteral("        <p>\n");
 
 WriteLiteral("            ");
 
 
-#line 57 "Test.cshtml"
+#line 60 "Test.cshtml"
        Write(Html.ActionLink("Error", "Error", "Test", new { message = "This is my error." }));
 
 
@@ -228,7 +256,7 @@ WriteLiteral("\n");
 WriteLiteral("            ");
 
 
-#line 58 "Test.cshtml"
+#line 61 "Test.cshtml"
        Write(Html.ActionLink("Forward", "Forward", "Test"));
 
 
@@ -237,7 +265,7 @@ WriteLiteral("            ");
 WriteLiteral("\n        </p>\n");
 
 
-#line 60 "Test.cshtml"
+#line 63 "Test.cshtml"
     }
 
 
@@ -269,7 +297,7 @@ WriteLiteral(@">
                 url: """);
 
 
-#line 78 "Test.cshtml"
+#line 81 "Test.cshtml"
                  Write(Url.Action("TestAjax", "Test"));
 
 
@@ -294,7 +322,7 @@ WriteLiteral(@""",
                 url: """);
 
 
-#line 94 "Test.cshtml"
+#line 97 "Test.cshtml"
                  Write(Url.Action("TestAjaxJson", "Test"));
 
 
@@ -312,6 +340,15 @@ WriteLiteral(@""",
         function ReceiveDataJson(data) {
             var div = document.getElementById(""ajaxDiv"");
             div.innerText = data.responseJSON;
+        }
+
+        function callNative(arg1, arg2) {
+            PortableNativeCall(""MyNativeCall"", [""arg1"", arg1, ""arg2"", arg2], ""callNativeReturn"");
+        }
+
+        function callNativeReturn(returnValue) {
+            var div = document.getElementById(""ajaxDiv"");
+            div.innerHTML = returnValue;
         }
 
         // This is called when the document is ready.

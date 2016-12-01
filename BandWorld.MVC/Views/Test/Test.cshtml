@@ -49,9 +49,12 @@
         // Demonstrates a submit button and a couple of buttons calling Javascript functions.
         <p>
             <input type="submit" name="command" value="Save" />
-            <input type="button" name="command" value="myFunc" onclick="javascript: { myFunc('from myFunc'); }" />
-            <input type="button" name="command" value="ajaxHtml" onclick="javascript: { ajaxHtml('from ajaxHtml'); }" />
-            <input type="button" name="command" value="ajaxJson" onclick="javascript: { ajaxJson('from ajaxJson'); }" />
+            <input type="button" name="command" value="myFunc" onclick="myFunc('from myFunc')" />
+            <input type="button" name="command" value="ajaxHtml" onclick="ajaxHtml('from ajaxHtml')" />
+            <input type="button" name="command" value="ajaxJson" onclick="ajaxJson('from ajaxJson')" />
+            <input type="button" name="command" value="alert" onclick="alert('Alert called.')" />
+            <input type="submit" name="command" value="CallJavascript" />
+            <input type="button" name="command" value="CallNative" onclick="callNative('arg1', 'arg2')"  />
         </p>
         <p>
             @Html.ActionLink("Error", "Error", "Test", new { message = "This is my error." })
@@ -103,6 +106,15 @@
         function ReceiveDataJson(data) {
             var div = document.getElementById("ajaxDiv");
             div.innerText = data.responseJSON;
+        }
+
+        function callNative(arg1, arg2) {
+            PortableNativeCall("MyNativeCall", ["arg1", arg1, "arg2", arg2], "callNativeReturn");
+        }
+
+        function callNativeReturn(returnValue) {
+            var div = document.getElementById("ajaxDiv");
+            div.innerHTML = returnValue;
         }
 
         // This is called when the document is ready.
