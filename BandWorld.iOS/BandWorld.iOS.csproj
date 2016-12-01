@@ -123,6 +123,10 @@
       <Project>{3632BA39-4DF7-4D79-9716-8D807D76F65B}</Project>
       <Name>BandWorld.MVC</Name>
     </ProjectReference>
+    <ProjectReference Include="..\JTRazorPortable\JTRazorPortable.csproj">
+      <Project>{38B4EAC0-F418-446F-ABE6-CAF63C5EC8E8}</Project>
+      <Name>JTRazorPortable</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
 </Project>

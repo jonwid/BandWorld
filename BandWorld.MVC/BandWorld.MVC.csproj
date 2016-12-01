@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{3632BA39-4DF7-4D79-9716-8D807D76F65B}</ProjectGuid>
+    <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <RootNamespace>BandWorld.MVC</RootNamespace>
+    <AssemblyName>BandWorld.MVC</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>Profile344</TargetFrameworkProfile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Application\ApplicationData.cs" />
+    <Compile Include="BandWorldCommonApp.cs" />
+    <Compile Include="Controllers\ControllerCommon.cs" />
+    <Compile Include="Controllers\TestController.cs" />
+    <Compile Include="Helpers\HtmlExtensions.cs" />
+    <Compile Include="Helpers\ViewExtensions.cs" />
+    <Compile Include="Models\MainViewModel.cs" />
+    <Compile Include="Views\Shared\_Layout.cs">
+      <DependentUpon>_Layout.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Shared\_MainFooter.cs">
+      <DependentUpon>_MainFooter.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Shared\_MainHeader.cs">
+      <DependentUpon>_MainHeader.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Shared\Error.cs">
+      <DependentUpon>Error.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Test\_SubView.cs">
+      <DependentUpon>_SubView.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Test\_TestAjax.cs">
+      <DependentUpon>_TestAjax.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Test\Test.cs">
+      <DependentUpon>Test.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Test\About.cs">
+      <DependentUpon>About.cshtml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Scripts\bootstrap.min.js" />
+    <None Include="Scripts\jquery-1.10.2.min.js" />
+    <None Include="Scripts\myscript.js" />
+    <None Include="Scripts\portable-razor.js" />
+    <None Include="web.config" />
+    <None Include="Views\Shared\_Layout.cshtml">
+      <Generator>RazorTemplatePreprocessor</Generator>
+      <LastGenOutput>_Layout.cs</LastGenOutput>
+    </None>
+    <None Include="Views\Shared\_MainFooter.cshtml">
+      <Generator>RazorTemplatePreprocessor</Generator>
+      <LastGenOutput>_MainFooter.cs</LastGenOutput>
+    </None>
+    <None Include="Views\Shared\_MainHeader.cshtml">
+      <Generator>RazorTemplatePreprocessor</Generator>
+      <LastGenOutput>_MainHeader.cs</LastGenOutput>
+    </None>
+    <None Include="Views\Shared\Error.cshtml">
+      <Generator>RazorTemplatePreprocessor</Generator>
+      <LastGenOutput>Error.cs</LastGenOutput>
+    </None>
+    <None Include="Views\Test\_SubView.cshtml">
+      <Generator>RazorTemplatePreprocessor</Generator>
+      <LastGenOutput>_SubView.cs</LastGenOutput>
+    </None>
+    <None Include="Views\Test\_TestAjax.cshtml">
+      <Generator>RazorTemplatePreprocessor</Generator>
+      <LastGenOutput>_TestAjax.cs</LastGenOutput>
+    </None>
+    <None Include="Views\Test\Test.cshtml">
+      <Generator>RazorTemplatePreprocessor</Generator>
+      <LastGenOutput>Test.cs</LastGenOutput>
+    </None>
+    <None Include="Views\Test\About.cshtml">
+      <Generator>RazorTemplatePreprocessor</Generator>
+      <LastGenOutput>About.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Views\Shared\" />
+    <Folder Include="Views\Test\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Content\Images\Back.png" />
+    <EmbeddedResource Include="Content\bootstrap.min.css" />
+    <EmbeddedResource Include="Content\site.css" />
+    <EmbeddedResource Include="Content\Splash.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\JTRazorPortable\JTRazorPortable.csproj">
+      <Project>{38B4EAC0-F418-446F-ABE6-CAF63C5EC8E8}</Project>
+      <Name>JTRazorPortable</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
+</Project>
