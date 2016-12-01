@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BandWorld.iOS", "BandWorld.iOS\BandWorld.iOS.csproj", "{130198BF-1BCE-4C65-A522-EDFD7ED0DCB8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JTRazorPortable", "JTRazorPortable\JTRazorPortable.csproj", "{38B4EAC0-F418-446F-ABE6-CAF63C5EC8E8}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BandWorld.MVC", "BandWorld.MVC\BandWorld.MVC.csproj", "{3632BA39-4DF7-4D79-9716-8D807D76F65B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JTRazorPortable", "JTRazorPortable\JTRazorPortable.csproj", "{38B4EAC0-F418-446F-ABE6-CAF63C5EC8E8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,14 +23,6 @@ Global
 		{130198BF-1BCE-4C65-A522-EDFD7ED0DCB8}.Release|iPhoneSimulator.Build.0 = Release|iPhoneSimulator
 		{130198BF-1BCE-4C65-A522-EDFD7ED0DCB8}.Debug|iPhone.ActiveCfg = Debug|iPhone
 		{130198BF-1BCE-4C65-A522-EDFD7ED0DCB8}.Debug|iPhone.Build.0 = Debug|iPhone
-		{38B4EAC0-F418-446F-ABE6-CAF63C5EC8E8}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
-		{38B4EAC0-F418-446F-ABE6-CAF63C5EC8E8}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
-		{38B4EAC0-F418-446F-ABE6-CAF63C5EC8E8}.Release|iPhone.ActiveCfg = Release|Any CPU
-		{38B4EAC0-F418-446F-ABE6-CAF63C5EC8E8}.Release|iPhone.Build.0 = Release|Any CPU
-		{38B4EAC0-F418-446F-ABE6-CAF63C5EC8E8}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
-		{38B4EAC0-F418-446F-ABE6-CAF63C5EC8E8}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
-		{38B4EAC0-F418-446F-ABE6-CAF63C5EC8E8}.Debug|iPhone.ActiveCfg = Debug|Any CPU
-		{38B4EAC0-F418-446F-ABE6-CAF63C5EC8E8}.Debug|iPhone.Build.0 = Debug|Any CPU
 		{3632BA39-4DF7-4D79-9716-8D807D76F65B}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
 		{3632BA39-4DF7-4D79-9716-8D807D76F65B}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
 		{3632BA39-4DF7-4D79-9716-8D807D76F65B}.Release|iPhone.ActiveCfg = Release|Any CPU
@@ -39,5 +31,13 @@ Global
 		{3632BA39-4DF7-4D79-9716-8D807D76F65B}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
 		{3632BA39-4DF7-4D79-9716-8D807D76F65B}.Debug|iPhone.ActiveCfg = Debug|Any CPU
 		{3632BA39-4DF7-4D79-9716-8D807D76F65B}.Debug|iPhone.Build.0 = Debug|Any CPU
+		{38B4EAC0-F418-446F-ABE6-CAF63C5EC8E8}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
+		{38B4EAC0-F418-446F-ABE6-CAF63C5EC8E8}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
+		{38B4EAC0-F418-446F-ABE6-CAF63C5EC8E8}.Release|iPhone.ActiveCfg = Release|Any CPU
+		{38B4EAC0-F418-446F-ABE6-CAF63C5EC8E8}.Release|iPhone.Build.0 = Release|Any CPU
+		{38B4EAC0-F418-446F-ABE6-CAF63C5EC8E8}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
+		{38B4EAC0-F418-446F-ABE6-CAF63C5EC8E8}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
+		{38B4EAC0-F418-446F-ABE6-CAF63C5EC8E8}.Debug|iPhone.ActiveCfg = Debug|Any CPU
+		{38B4EAC0-F418-446F-ABE6-CAF63C5EC8E8}.Debug|iPhone.Build.0 = Debug|Any CPU
 	EndGlobalSection
 EndGlobal
